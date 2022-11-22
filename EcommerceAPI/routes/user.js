@@ -3,7 +3,7 @@ const { verifyTokenAuthorisation, verifyTokenAndAdmin } = require("./verifyToken
 
 const router = require("express").Router();
 
-//UPDATE
+//UPDATE info of a user using id
 router.put("/:id", verifyTokenAuthorisation, async (req, res) => {
     if(req.body.password){
         re.body.password= CryptoJS.AES.encrypt(
@@ -24,7 +24,7 @@ router.put("/:id", verifyTokenAuthorisation, async (req, res) => {
     }   
 });
 
-//DELETE
+//DELETE auser account
 
 router.delete("/:id", verifyTokenAuthorisation, async (req, res) =>{
     try{
@@ -35,7 +35,7 @@ router.delete("/:id", verifyTokenAuthorisation, async (req, res) =>{
     }
 });
 
-//GET USER
+//GET USER details( get profile)
 router.get("/find/:id", verifyTokenAndAdmin, async (req, res) =>{
     try{
         const user = await User.findById(req.params.id);
@@ -47,7 +47,7 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req, res) =>{
     }
 });
 
-//GET ALL USER
+//GET ALL USER for admin only get all user details
 router.get("/", verifyTokenAndAdmin, async (req, res) =>{
     const query = req.query.new
     try{
@@ -60,7 +60,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) =>{
     }
 });
 
-//GET USER STATS
+//GET USER STATS 
 
 router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
     const date = new Date();

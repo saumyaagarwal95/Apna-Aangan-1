@@ -1,76 +1,76 @@
-const Product = require("../models/Product");
+const JobPost = require("../models/JobPost");
 
 const { verifyToken, verifyTokenAuthorisation, verifyTokenAndAdmin } = require("./verifyToken");
 
 const router = require("express").Router();
 
-//CREATE add new product to database
+//CREATE add new JobPost to database
 router.post("/",verifyTokenAndAdmin, async (req,res)=>{
-    const newProduct = new Product(req.body);
+    const newJobPost = new JobPost(req.body);
     try{
-        const savedProduct = await newProduct.save();
-        return res.status(200).json(savedProduct);
+        const savedJobPost = await newJobPost.save();
+        return res.status(200).json(savedJobPost);
     }catch(err){
         return res.status(500).json(err);
     }
 });
 
-//UPDATE a product in the database
+//UPDATE a JobPost in the database
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {  
     try{
-        const updatedProduct = await Product.findByIdAndUpdate(
+        const updatedJobPost = await JobPost.findByIdAndUpdate(
            req.params.id, 
            {
              $set: req.body
            }, 
            {new: true}
         );
-        return res.status(200).json(updatedProduct);
+        return res.status(200).json(updatedJobPost);
     }catch(err){
         return res.status(500).json(err);
     }   
 });
 
-//DELETE a product from the database
+//DELETE a JobPost from the database
 
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) =>{
     try{
-        await Product.findByIdAndDelete(req.params.id)
+        await JobPost.findByIdAndDelete(req.params.id)
         return res.status(200).json("Product has been deleted");
     }catch(err){
         return res.status(500).json(err);
     }
 });
 
-//GET details of a PRODUCT
+//GET details of a JobPost
 router.get("/find/:id",  async (req, res) =>{
     try{
-        const product = await User.findById(req.params.id);
+        const jobpost = await User.findById(req.params.id);
         
-        res.status(200).json(product);
+        res.status(200).json(jobpost);
     }catch(err){
         return res.status(500).json(err);
     }
 });
 
-//GET ALL products
+//GET ALL courses
 router.get("/", async (req, res) =>{
     const qNew = req.query.new;
     const qCategory = req.query.category;
     try{
-        let products;
+        let jobposts;
         	
         if(qNew){
-            products = await Product.find().sort({createdAt : -1}).limit(1);
+            jobposts = await JobPost.find().sort({createdAt : -1}).limit(1);
         }else if(qCategory){
-            products = await Product.find({categories:{
+            jobposts = await JobPost.find({categories:{
                 $in: [qCategory],
             },
         });
         }else{
-            products = await Product.find();
+            jobposts = await JobPost.find();
         }
-        res.status(200).json(products);
+        res.status(200).json(jobposts);
     }catch(err){
         return res.status(500).json(err);
     }
