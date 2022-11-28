@@ -45,7 +45,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) =>{
 //GET details of a JobPost
 router.get("/find/:id",  async (req, res) =>{
     try{
-        const jobpost = await User.findById(req.params.id);
+        const jobpost = await JobPost.findById(req.params.id);
         
         res.status(200).json(jobpost);
     }catch(err){

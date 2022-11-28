@@ -24,7 +24,7 @@ router.put("/:id", verifyTokenAuthorisation, async (req, res) => {
     }   
 });
 
-//DELETE auser account
+//DELETE a user account
 
 router.delete("/:id", verifyTokenAuthorisation, async (req, res) =>{
     try{

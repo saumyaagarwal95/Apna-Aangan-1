@@ -6,6 +6,7 @@ const businessRegisterSchema = new mongoose.Schema(
       business: [
         {
             business_name:{type:String},
+            business_category:{type:String},
             business_phoneno:{type:String,required:true,unique:true},
             business_email:{type: String, required: true, unique:true},
             business_address: {type : Object , required: true},
